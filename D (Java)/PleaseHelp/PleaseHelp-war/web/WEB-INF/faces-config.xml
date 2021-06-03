@@ -1,0 +1,409 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+   
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+    </navigation-rule>
+    
+    <!-- Begin Users -->
+    <navigation-rule>
+        <description>Render Edit User</description>
+        <from-view-id>/admin/users.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManagementBean.renderEditUser(user.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/users.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Edit User</description>
+        <from-view-id>/admin/editUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManagementBean.editUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/editUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>         
+    
+    <navigation-rule>
+        <description>Render New User</description>
+        <from-view-id>/admin/users.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <from-action>#{userManagementBean.renderNewUser()}</from-action>            
+            <to-view-id>/admin/newUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+    <navigation-rule>
+        <description>New User</description>
+        <from-view-id>/admin/newUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManagementBean.newUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/newUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/newUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Render Delete User</description>
+        <from-view-id>/admin/users.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManagementBean.renderDeleteUser(user.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/users.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Delete User</description>
+        <from-view-id>/admin/deleteUser.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{userManagementBean.deleteUser()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteUser.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{userManagementBean.deleteUser()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/deleteUser.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    <!-- End Users -->
+    
+    <!-- Begin Roles -->
+    <navigation-rule>
+        <description>Render Edit Role</description>
+        <from-view-id>/admin/roles.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{roleManagementBean.renderEditRole(role.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editRole.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/roles.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Edit Role</description>
+        <from-view-id>/admin/editRole.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{roleManagementBean.editRole()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editRole.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/editRole.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>         
+    
+    <navigation-rule>
+        <description>Render New Role</description>
+        <from-view-id>/admin/roles.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <from-action>#{roleManagementBean.renderNewRole()}</from-action>            
+            <to-view-id>/admin/newRole.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+    <navigation-rule>
+        <description>New Role</description>
+        <from-view-id>/admin/newRole.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{roleManagementBean.newRole()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/newRole.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/newRole.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Render Delete Role</description>
+        <from-view-id>/admin/roles.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{roleManagementBean.renderDeleteRole(role.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteRole.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/roles.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Delete Role</description>
+        <from-view-id>/admin/deleteRole.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{roleManagementBean.deleteRole()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteRole.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{roleManagementBean.deleteRole()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/deleteRole.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    <!-- End Roles -->
+    
+    <!-- Begin Categories -->
+    <navigation-rule>
+        <description>Render Edit Category</description>
+        <from-view-id>/admin/categories.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.renderEditCategory(category.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/editCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Edit Category</description>
+        <from-view-id>/admin/editCategory.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.editCategory()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/editCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/editCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>         
+    
+    <navigation-rule>
+        <description>Render New Category</description>
+        <from-view-id>/admin/categories.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <from-action>#{categoryManagementBean.renderNewCategory()}</from-action>            
+            <to-view-id>/admin/newCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>   
+    
+    <navigation-rule>
+        <description>New Category</description>
+        <from-view-id>/admin/newCategory.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.newCategory()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/newCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/newCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Render Delete Category</description>
+        <from-view-id>/admin/categories.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.renderDeleteCategory(category.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/deleteCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Delete Category</description>
+        <from-view-id>/admin/deleteCategory.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.deleteCategory()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/deleteCategory.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{categoryManagementBean.deleteCategory()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/deleteCategory.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>    
+    <!-- End Categories -->
+    
+    <!-- Begin Tickets -->
+    <navigation-rule>
+        <description>Ticket filters</description>
+        <from-view-id>/admin/tickets.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.removeFilter()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setFilter('OPEN')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setFilter('WAITING')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setFilter('CLOSED')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setFilter('LOCKED')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+    <navigation-rule>
+        <description>Render Ticket</description>
+        <from-view-id>/admin/tickets.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.renderTicket(ticket.id)}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/tickets.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Add Comment</description>
+        <from-view-id>/admin/ticket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.addComment()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.addComment()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+    <navigation-rule>
+        <description>Lock Ticket</description>
+        <from-view-id>/admin/ticket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('LOCKED')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('LOCKED')}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+        
+    <navigation-rule>
+        <description>Re-Open Ticket</description>
+        <from-view-id>/admin/ticket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('OPEN')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('OPEN')}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+        
+    <navigation-rule>
+        <description>Close Ticket</description>
+        <from-view-id>/admin/ticket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('CLOSED')}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{ticketManagementBean.setStatus('CLOSED')}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/admin/ticket.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!-- End Tickets -->
+    
+    <!-- Begin Public -->
+    <navigation-rule>
+        <description>Add Comment Public</description>
+        <from-view-id>/respondToTicket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{publicTicketBean.addComment()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/respondToTicketSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{publicTicketBean.addComment()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/respondToTicketFailure.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    
+        <navigation-rule>
+        <description>Submit Ticket Public</description>
+        <from-view-id>/submitTicket.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{publicTicketBean.submitTicket()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/submitTicketSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{publicTicketBean.submitTicket()}</from-action>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>/submitTicketFailure.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <!-- End Pubilc -->
+    
+    
+    <navigation-rule>
+        <description>Log Out</description>
+        
+        <navigation-case>
+            <from-action>#{loginManagementBean.logOut()}</from-action>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/login.xhtml</to-view-id>
+        </navigation-case>
+        
+    </navigation-rule>
+</faces-config>

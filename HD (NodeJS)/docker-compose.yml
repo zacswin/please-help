@@ -1,0 +1,43 @@
+version: "3"
+services:
+  # main:
+  #   container_name: main
+  #   build:
+  #     context: .
+  #     target: development
+  #   volumes:
+  #     - .:/usr/src/app
+  #   ports:
+  #     - ${SERVER_PORT}:80
+  #     - 9229:9229
+  #   command: npm run start:debug
+  #   environment:
+  #     DATABASE_URL: postgres://${DB_USERNAME}:${DB_PASSWORD}@localhost:5432/${DB_DATABASE_NAME}
+  #   networks:
+  #     - webnet
+  #   depends_on:
+  #     - redis
+  #     - postgres
+  redis:
+    container_name: redis
+    image: redis:6
+    networks:
+      - webnet
+  postgres:
+    container_name: postgres
+    image: postgres:12
+    networks:
+      - webnet
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: 'postgres'
+      POSTGRES_DB: 'please_help'
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  webnet:
+volumes:
+  pgdata:

@@ -1,0 +1,49 @@
+<h1 class="is-size-1">New Role</h1>
+<form method="POST" action="/role">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Privilege</label>
+    <div class="control">
+      <div class="select">
+        <select name="privilege">
+          <option disabled>Select a privilege</option>
+          <option value="administrator">Administrator</option>
+          <option value="user">User</option>
+          <option value="readonly">Read-Only</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <input type="submit" class="button is-link" value="Submit"></input>
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'success')}}
+<div class="notification is-primary">
+  Saved successfully! <a href="/admin/role">Go back.</a>
+</div>
+{{/if}}
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Error saving.
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}

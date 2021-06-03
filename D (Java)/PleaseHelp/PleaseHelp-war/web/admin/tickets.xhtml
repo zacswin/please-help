@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+
+                <nav class="panel">
+                    <p class="panel-heading">
+                        Tickets
+                    </p>
+
+                    <h:form>
+                        <p class="panel-tabs">
+
+                            <h:commandLink action="#{ticketManagementBean.removeFilter()}" class="#{((ticketManagementBean.filter == null) ? 'is-active' : '')}">All</h:commandLink>
+                            <h:commandLink action="#{ticketManagementBean.setFilter('OPEN')}" class="#{((ticketManagementBean.filter == 'OPEN') ? 'is-active' : '')}">Open</h:commandLink>
+                            <h:commandLink action="#{ticketManagementBean.setFilter('WAITING')}" class="#{((ticketManagementBean.filter == 'WAITING') ? 'is-active' : '')}">Waiting</h:commandLink>
+                            <h:commandLink action="#{ticketManagementBean.setFilter('CLOSED')}" class="#{((ticketManagementBean.filter == 'CLOSED') ? 'is-active' : '')}">Closed</h:commandLink>
+                            <h:commandLink action="#{ticketManagementBean.setFilter('LOCKED')}" class="#{((ticketManagementBean.filter == 'LOCKED') ? 'is-active' : '')}">Locked</h:commandLink>
+
+                        </p>
+                    </h:form>
+
+                    <ui:repeat value="#{ticketManagementBean.tickets}" var="ticket">
+                        <div class="panel-block is-active">
+                            <h:form >
+                                <h:commandLink value="" action="#{ticketManagementBean.renderTicket(ticket.id)}">
+                                    <i class="mr-1
+                                       #{(ticket.status == 'OPEN') ? 'fas fa-circle' : '' }
+                                       #{(ticket.status == 'WAITING') ? 'far fa-circle' : '' }
+                                       #{(ticket.status == 'CLOSED') ? 'far fa-check-circle has-text-success' : '' }
+                                       #{(ticket.status == 'LOCKED') ? 'fas fa-lock has-text-danger' : '' }" aria-hidden="true"></i>
+
+                                    <h:outputText class="#{(ticket.status == 'CLOSED' || ticket.status == 'LOCKED') ? 'has-text-grey-light' : ''}" value="#{ticket.title}" />
+                                    <h:outputText value="#{ticket.category.name}" class="ml-2 tag is-#{ticket.category.colour}"/>
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </ui:repeat>
+                </nav>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

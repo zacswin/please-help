@@ -1,0 +1,30 @@
+<nav class="panel">
+  <p class="panel-heading">
+    Categories
+  </p>
+  <div class="panel-block">
+    <a class="button" href="/admin/category/new">New Category</a>
+  </div>
+
+  {{#each categories}}
+  <div class="panel-block is-active is-flex is-justify-content-flex-start">
+    <span class="panel-icon">
+      <i class="fas fa-folder" aria-hidden="true"></i>
+    </span>
+    {{name}}
+    <div style="margin-left: auto">
+      <a href="/admin/category/{{id}}" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-edit"></i>
+        </span>
+      </a>
+      <a href="/admin/category/{{id}}/delete" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+  {{/each}}
+
+</nav>

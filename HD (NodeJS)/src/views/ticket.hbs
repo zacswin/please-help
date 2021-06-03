@@ -1,0 +1,128 @@
+<article class="media">
+  <div class="media-content">
+    <div class="content">
+
+      <h1>{{ticket.title}}</h1>
+
+      <div class="is-flex">
+        <div class="mr-2 has-text-weight-semibold"><span class="mr-1">From:</span><span class="tag is-light">{{ticket.email}}</span></div>
+        <div class="mr-2 has-text-weight-semibold"><span class="mr-1">Date:</span><span class="tag is-light">{{ticket.date}}</span></div>
+        <div class="mr-2 has-text-weight-semibold"><span class="mr-1">Category:</span><span
+            class=" tag is-{{ticket.categoryColour}}">{{ticket.categoryName}}</span></div>
+        <div class="has-text-weight-semibold"><span class="mr-1">Status:</span>
+          {{#if (eq ticket.status "open")}}
+          <span class="tag is-primary is-light">Open</span>
+          {{else if (eq ticket.status "waiting")}}
+          <span class="tag is-info is-light">Waiting</span>
+          {{else if (eq ticket.status "closed")}}
+          <span class="tag is-success is-light">Closed</span>
+          {{else}}
+          <span class="tag is-danger is-light">Locked</span>
+          {{/if}}
+        </div>
+      </div>
+
+      <hr />
+
+      {{ticket.description}}
+      </p>
+    </div>
+
+  </div>
+</article>
+
+{{#each ticket.comments}}
+<article class="media">
+  <div class="media-content">
+    <div class="content">
+      <p>
+        <span class="has-text-weight-semibold">Response by</span>
+        {{#if (isdefined commentername)}}
+        <span class="tag is-info"><strong>{{commentername}}</strong></span>
+        {{else}}
+        <span class="tag is-light"><strong>{{../ticket.email}}</strong></span>
+        {{/if}}
+        <span class="has-text-weight-semibold">at</span>
+        <span class="tag is-light"><strong>{{commentdate}}</strong></span>
+        <br>
+        {{commenttext}}
+      </p>
+    </div>
+
+  </div>
+</article>
+
+{{/each}}
+
+{{#unless (eq ticket.status 'locked')}}
+<article class="media">
+  <div class="media-content">
+    <div class="field">
+      <p class="control">
+      <form method="POST" action="/ticket/{{ticket.id}}/comment">
+        <textarea name="commentText" class="textarea" placeholder="Add a comment..." {{#if (eq user.privilege "readonly"
+          )}}disabled="true" {{/if}}></textarea>
+
+        <input type="submit" value="Submit Comment" class="button is-info mt-4 is-pulled-right" {{#if (eq
+          user.privilege "readonly" )}}disabled="true" {{/if}} />
+      </form>
+      </p>
+    </div>
+    <div class="is-clearfix"></div>
+    <hr />
+    <nav class="level">
+      <div class="level-left"></div>
+      <div class="level-right">
+        <div class="level-item">
+          <form method="POST" action="/ticket/{{ticket.id}}/lock">
+            <input type="submit" value="Lock" class="button is-danger" {{#unless (eq user.privilege "administrator"
+              )}}disabled="true" {{/unless}} />
+          </form>
+        </div>
+        {{#if (eq ticket.status 'closed')}}
+        <div class="level-item">
+          <form method="POST" action="/ticket/{{ticket.id}}/re-open">
+            <input type="submit" value="Re-Open" class="button is-success" {{#if (eq user.privilege "readonly"
+              )}}disabled="true" {{/if}} />
+          </form>
+        </div>
+        {{else}}
+        <div class="level-item">
+          <form method="POST" action="/ticket/{{ticket.id}}/close">
+            <input type="submit" value="Close" class="button is-success" {{#if (eq user.privilege "readonly"
+              )}}disabled="true" {{/if}} />
+          </form>
+        </div>
+        {{/if}}
+
+      </div>
+    </nav>
+  </div>
+</article>
+{{/unless}}
+
+<br />
+
+{{#if (eq commentResult 'failed')}}
+<div class="notification is-danger">
+  Failed to add comment.
+</div>
+{{/if}}
+
+{{#if (eq statusResult 'failed')}}
+<div class="notification is-danger">
+  Failed to change status of ticket
+</div>
+{{/if}}
+
+{{#if (eq statusResult 'success')}}
+<div class="notification is-success">
+  Successfully changed status of ticket
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}

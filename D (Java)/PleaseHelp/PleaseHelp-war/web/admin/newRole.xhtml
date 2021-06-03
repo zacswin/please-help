@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+                <h1 class="is-size-1">New Role</h1>
+                <h:form id="newRole">
+                    <div class="field">
+                        <label class="label">ID</label>
+                        <div class="control">
+                            <h:inputText class="input" value="#{roleManagementBean.id}" id="id" required="true" validatorMessage="A numeric ID must be provided" requiredMessage="A numeric ID must be provided">
+                                <f:validateDoubleRange minimum="1" maximum="999999"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <h:inputText class="input" value="#{roleManagementBean.name}" id="name" validatorMessage="A name must be provided (3-255 characters)">
+                                <f:validateLength minimum="3" maximum="255"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Privilege</label>
+                        <div class="control">
+                            <div class="select">
+                                <h:selectOneMenu required="true" value="#{roleManagementBean.privilege}" id="privilege" requiredMessage="A privilege is required">
+                                    <f:selectItem itemValue="#{null}" itemLabel="Select a role" />
+                                    <f:selectItem itemValue="administrator" itemLabel="Administrator" />
+                                    <f:selectItem itemValue="user" itemLabel="User" />
+                                    <f:selectItem itemValue="readonly" itemLabel="Read-Only" />
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <h:commandButton action="#{roleManagementBean.newRole()}" class="button is-link" value="Submit"></h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+
+                <br />
+
+                <h:messages class="notification is-danger"></h:messages>
+                
+                <h:panelGroup rendered="#{roleManagementBean.saveResult == 'success'}" class="notification is-primary">
+                    Saved successfully! <a href="/PleaseHelp-war/faces/admin/roles.xhtml">Go back</a>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{roleManagementBean.saveResult == 'failure'}" class="notification is-danger">
+                    Error saving. Maybe the ID is taken.
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

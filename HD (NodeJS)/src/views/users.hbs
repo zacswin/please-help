@@ -1,0 +1,30 @@
+<nav class="panel">
+  <p class="panel-heading">
+    Users
+  </p>
+  <div class="panel-block">
+    <a class="button" href="/admin/user/new">New User</a>
+  </div>
+
+  {{#each users}}
+  <div class="panel-block is-active is-flex is-justify-content-flex-start">
+    <span class="panel-icon">
+      <i class="fas fa-user" aria-hidden="true"></i>
+    </span>
+    {{name}}
+    <div style="margin-left: auto">
+      <a href="/admin/user/{{id}}" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-edit"></i>
+        </span>
+      </a>
+      <a href="/admin/user/{{id}}/delete" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+  {{/each}}
+
+</nav>

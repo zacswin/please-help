@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+
+                <h1 class="is-size-1">Edit User</h1>
+                <h:form id="editUser">
+                    <h:inputHidden class="input" value="#{userManagementBean.id}"></h:inputHidden>
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <h:inputText id="name" class="input" value="#{userManagementBean.name}" validatorMessage="A name must be provided (3-255 characters)">
+                                <f:validateLength minimum="3" maximum="255"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Email</label>
+                        <div class="control">
+                            <h:inputText 
+                                id="email"
+                                class="input" 
+                                value="#{userManagementBean.email}"  
+                                requiredMessage="Email must be provided"
+                                validatorMessage="Email incorrectly formatted">
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                <f:validateLength minimum="3" maximum="255"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+
+
+                    <div class="field">
+                        <label class="label">Role</label>
+                        <div class="control">
+                            <div class="select">
+                                <h:selectOneMenu id="role" required="true" value="#{userManagementBean.roleId}" requiredMessage="A role is required">
+                                    <f:selectItem itemValue="#{null}" itemLabel="Select a role" />
+                                    <f:selectItems value="#{userManagementBean.roles}" var="role" itemValue="#{role.id}" itemLabel="#{role.name}"></f:selectItems>
+
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <h:commandButton action="#{userManagementBean.editUser()}" class="button is-link" value="Submit"></h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+
+                <br />
+
+                <h:messages class="notification is-danger"></h:messages>
+
+                <h:panelGroup rendered="#{userManagementBean.saveResult == 'success'}" class="notification is-primary">
+                    Saved successfully! <a href="/PleaseHelp-war/faces/admin/users.xhtml">Go back</a>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{userManagementBean.saveResult == 'failure'}" class="notification is-danger">
+                    Error saving. Maybe the ID is taken.
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

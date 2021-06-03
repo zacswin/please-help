@@ -1,0 +1,62 @@
+<div class="container m-4">
+  {{#if (eq result 'success')}}
+  <div class="notification is-primary">
+    Ticket submitted successfully! You will receive a response via email.
+  </div>
+  {{/if}}
+
+  {{#if (eq result 'failed')}}
+  <div class="notification is-danger">
+    Error submitting your ticket. Please try again
+  </div>
+  {{/if}}
+
+  <h1 class="is-size-1">Submit a ticket</h1>
+  <form method="POST" action="/submit-ticket">
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control">
+        <input class="input" name="email" type="text" placeholder="myemail@mail.com" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Title</label>
+      <div class="control">
+        <input class="input" name="title" type="text" placeholder="My issue name" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Category</label>
+      <div class="control">
+        <div class="select">
+          <select name="categoryId">
+            <option disabled>Select a category</option>
+            {{#each categories}}
+            <option value="{{id}}">{{name}}</option>
+            {{/each}}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label">Describe the issue you are having</label>
+      <div class="control">
+        <textarea name="description" class="textarea" placeholder="Your issue here..."></textarea>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="control">
+        <input type="submit" class="button is-link" value="Submit"></input>
+      </div>
+    </div>
+  </form>
+
+  <div class="notification is-link is-light mt-4">
+    <strong>Are you a staff member?</strong>
+    Click here to <a href="/user/login">log in</a>.
+  </div>
+</div>

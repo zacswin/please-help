@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <!--  https://stackoverflow.com/questions/8494264/how-to-add-placeholder-attribute-to-jsf-input-component -->
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+
+                            <h1><h:outputText value="#{ticketManagementBean.title}" /></h1>
+
+                            <div class="is-flex">
+                                <div class="mr-2 has-text-weight-semibold"><span class="mr-1">From:</span><span class="tag is-light"><h:outputText value="#{ticketManagementBean.email}" /></span></div>
+                                <div class="mr-2 has-text-weight-semibold"><span class="mr-1">Date:</span><span class="tag is-light"><h:outputText value="#{ticketManagementBean.dateCreated}" /></span></div>
+                                <div class="mr-2 has-text-weight-semibold"><span class="mr-1">Category:</span>
+                                    <h:outputText value="#{ticketManagementBean.category.name}" class="tag is-#{ticketManagementBean.category.colour}" />
+
+                                    <div class="has-text-weight-semibold">
+                                        <span class="mr-1">Status:</span>
+                                        <h:panelGroup rendered="#{ticketManagementBean.status == 'OPEN'}" class="tag is-primary is-light">Open</h:panelGroup>
+                                        <h:panelGroup rendered="#{ticketManagementBean.status == 'WAITING'}" class="tag is-info is-light">Waiting</h:panelGroup>
+                                        <h:panelGroup rendered="#{ticketManagementBean.status == 'CLOSED'}" class="tag is-success is-light">Closed</h:panelGroup>
+                                        <h:panelGroup rendered="#{ticketManagementBean.status == 'LOCKED'}" class="tag is-danger is-light">Locked</h:panelGroup>
+                                    </div>
+                                </div>
+
+                                <hr />
+                            </div>
+                            <p>
+                                <h:outputText value="#{ticketManagementBean.description}" />
+                            </p>
+                        </div>               
+                    </div>
+                </article>
+
+                <ui:repeat value="#{ticketManagementBean.comments}" var="comment">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="has-text-weight-semibold">Response by</span>
+                                    <ui:fragment rendered="#{comment.author != null}">
+                                        <span class="tag is-info"><strong><h:outputText value="#{comment.author}" ></h:outputText></strong></span>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{comment.author == null}">
+                                        <span class="tag is-light"><strong><h:outputText value="#{ticketManagementBean.email}" ></h:outputText></strong></span>
+                                    </ui:fragment>
+                                    <span class="has-text-weight-semibold">at</span>
+                                    <span class="tag is-light"><strong><h:outputText value="#{comment.date}" ></h:outputText></strong></span>
+                                    <br />
+                                    <h:outputText value="#{comment.text}" ></h:outputText>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </ui:repeat>
+
+                <ui:fragment rendered="#{ticketManagementBean.status != 'LOCKED'}">
+
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="field">
+                                <p class="control">
+                                    <h:form>
+                                        <h:inputTextarea value="#{ticketManagementBean.commentText}" class="textarea" disabled="#{loginManagementBean.me.role.privilege == 'readonly'}" a:placeholder="Add a comment...">
+                                            <f:validateLength minimum="3" maximum="255"/>
+                                        </h:inputTextarea>
+                                        <h:commandButton action="#{ticketManagementBean.addComment()}" class="button is-info mt-4 is-pulled-right" value="Submit Comment" disabled="#{loginManagementBean.me.role.privilege == 'readonly'}"></h:commandButton>
+                                    </h:form>
+                                </p>
+                            </div>
+                            <div class="is-clearfix"></div>
+                            <hr />
+                            <nav class="level">
+                                <div class="level-left"></div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <h:form>
+                                            <h:commandButton
+                                                action="#{ticketManagementBean.setStatus('LOCKED')}"
+                                                disabled="#{loginManagementBean.me.role.privilege != 'administrator'}"
+                                                class="button is-danger"
+                                                value="Lock" ></h:commandButton>
+                                        </h:form>
+                                    </div>
+                                    <ui:fragment rendered="#{ticketManagementBean.status == 'CLOSED'}">
+                                        <div class="level-item">
+                                            <h:form>
+                                                <h:commandButton action="#{ticketManagementBean.setStatus('OPEN')}" disabled="#{loginManagementBean.me.role.privilege == 'readonly'}" class="button is-success" value="Re-Open"></h:commandButton>
+                                            </h:form>
+                                        </div>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{ticketManagementBean.status != 'CLOSED'}">
+                                        <div class="level-item">
+                                            <h:form>
+                                                <h:commandButton action="#{ticketManagementBean.setStatus('CLOSED')}" disabled="#{loginManagementBean.me.role.privilege == 'readonly'}" class="button is-success" value="Close"></h:commandButton>
+                                            </h:form>
+                                        </div>
+                                    </ui:fragment>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+
+                    <h:panelGroup rendered="#{ticketManagementBean.saveResult == 'success'}" class="notification is-primary">
+                        Success!
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{ticketManagementBean.saveResult == 'failure'}" class="notification is-danger">
+                        Error saving.
+                    </h:panelGroup>
+
+                </ui:fragment>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

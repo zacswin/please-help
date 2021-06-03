@@ -1,0 +1,21 @@
+<h1 class="is-size-1">Delete Category</h1>
+<p>Are you sure you would like to delete category #{{categoryId}} from the system?</p>
+<br />
+<form method="POST" action="/category/{{categoryId}}/delete">
+  <div class="level">
+    <div class="level-item">
+      <a class="button is-danger" href="/admin/category">No</a>
+    </div>
+    <div class="level-item">
+      <input type="submit" value="Yes" class="button is-success" />
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Cannot delete! There are tickets which use this category.
+</div>
+{{/if}}

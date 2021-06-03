@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <aside class="menu p-4">
+        <p class="is-size-4">Hello <h:outputText value="#{loginManagementBean.me.name}"></h:outputText></p>
+        <p class="menu-label">General</p>
+        <ul class="menu-list">
+            <li><a href="/PleaseHelp-war/faces/admin/tickets.xhtml">Tickets</a></li>
+        </ul>
+
+
+        <ui:fragment rendered="#{loginManagementBean.me.role.privilege == 'administrator'}">
+            <p class="menu-label">Administration</p>
+            <ul class="menu-list">
+                <li><a href="/PleaseHelp-war/faces/admin/roles.xhtml">Roles</a></li>
+                <li><a href="/PleaseHelp-war/faces/admin/users.xhtml">Users</a></li>
+                <li><a href="/PleaseHelp-war/faces/admin/categories.xhtml">Categories</a></li>
+            </ul>
+        </ui:fragment>
+
+        <p class="menu-label">Account</p>
+        <ul class="menu-list">
+            <li>
+                <h:form>
+                    <h:commandLink value="Log Out" action="#{loginManagementBean.logOut()}"></h:commandLink>
+                </h:form>
+            </li>
+        </ul>
+
+    </aside>
+</html>

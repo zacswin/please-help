@@ -1,0 +1,70 @@
+<h1 class="is-size-1">New User</h1>
+<form method="POST" action="/user">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <input class="input" type="email" name="email">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Password</label>
+    <div class="control">
+      <input class="input" type="password" name="password">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Confirm Password</label>
+    <div class="control">
+      <input class="input" type="password" name="confirmPassword">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Role</label>
+    <div class="control">
+      <div class="select">
+        <select name="roleId">
+          <option disabled>Select a category</option>
+          {{#each roles}}
+          <option value="{{id}}">{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <input type="submit" class="button is-link" value="Submit"></input>
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'success')}}
+<div class="notification is-primary">
+  Saved successfully! <a href="/admin/user">Go back.</a>
+</div>
+{{/if}}
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Error saving.
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}

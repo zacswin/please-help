@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+
+
+                <h1 class="is-size-1">Delete Role</h1>
+                <p>Are you sure you would like to delete role <h:outputText value="#{roleId}" /> from the system?</p>
+                <br />
+
+                <h:form>
+                    <div class="level">
+                        <div class="level-item">
+                            <a class="button is-danger" href="/PleaseHelp-war/faces/admin/roles.xhtml">No</a>
+                        </div>
+                        <div class="level-item">
+                            <h:commandLink value="Yes" action="#{roleManagementBean.deleteRole()}" class="button is-success"></h:commandLink>
+                        </div>
+                    </div>
+                </h:form>
+
+
+                <h:panelGroup rendered="#{roleManagementBean.saveResult == 'success'}" class="notification is-primary">
+                    Deleted successfully! <a href="/PleaseHelp-war/faces/admin/roles.xhtml">Go back</a>
+                </h:panelGroup>
+
+                <h:panelGroup rendered="#{roleManagementBean.saveResult == 'failure'}" class="notification is-danger">
+                    Cannot delete! There are users which use this role.
+                </h:panelGroup>
+            </ui:define>
+        </ui:composition>            
+    </h:body>
+</html>

@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <body>
+        <!-- used to load the ticket -->
+        <h:form>
+            <h:inputHidden value="#{publicTicketBean.id}" />
+        </h:form>
+        <div class="m-4">
+
+            <h1 class="is-size-1">Please Help! | Ticket</h1>     
+            <hr />
+
+            <ui:fragment rendered="#{publicTicketBean.ticketExists}">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+
+                            <h1><h:outputText value="#{publicTicketBean.title}" /></h1>
+
+                            <div class="is-flex">
+
+                                <div class="mr-2 has-text-weight-semibold">
+                                    <span class="mr-1">Date:</span><span class="tag is-light"><h:outputText value="#{publicTicketBean.dateCreated}" /></span>
+                                </div>
+                                <div class="mr-2 has-text-weight-semibold"><span class="mr-1">Category:</span>
+                                    <h:outputText value="#{publicTicketBean.category.name}" class="tag is-#{publicTicketBean.category.colour}" />
+
+                                    <div class="has-text-weight-semibold">
+                                        <span class="mr-1">Status:</span>
+                                        <h:panelGroup rendered="#{publicTicketBean.status == 'OPEN'}" class="tag is-primary is-light">Open</h:panelGroup>
+                                        <h:panelGroup rendered="#{publicTicketBean.status == 'WAITING'}" class="tag is-info is-light">Waiting</h:panelGroup>
+                                        <h:panelGroup rendered="#{publicTicketBean.status == 'CLOSED'}" class="tag is-success is-light">Closed</h:panelGroup>
+                                        <h:panelGroup rendered="#{publicTicketBean.status == 'LOCKED'}" class="tag is-danger is-light">Locked</h:panelGroup>
+                                    </div>
+                                </div>
+
+                                <hr />
+                            </div>
+                            <p>
+                                <h:outputText value="#{publicTicketBean.description}" />
+                            </p>
+                        </div>               
+                    </div>
+                </article>
+
+                <ui:repeat value="#{publicTicketBean.comments}" var="comment">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="content">
+                                <p>
+                                    <span class="has-text-weight-semibold">Response by</span>
+                                    <ui:fragment rendered="#{comment.author != null}">
+                                        <span class="tag is-info"><strong><h:outputText value="#{comment.author}" ></h:outputText></strong></span>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{comment.author == null}">
+                                        <span class="tag is-light"><strong>You</strong></span>
+                                    </ui:fragment>
+                                    <span class="has-text-weight-semibold">at</span>
+                                    <span class="tag is-light"><strong><h:outputText value="#{comment.date}" ></h:outputText></strong></span>
+                                    <br />
+                                    <h:outputText value="#{comment.text}" ></h:outputText>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </ui:repeat>
+
+                <ui:fragment rendered="#{publicTicketBean.status != 'LOCKED'}">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="field">
+                                <p class="control">
+                                    <h:form id="addComment">
+                                        <div class="field">
+                                            <label class="label">Email</label>
+                                            <h:inputText
+                                                value="#{publicTicketBean.email}"
+                                                class="input"
+                                                a:placeholder="myemail@test.com"
+                                                id="email"
+                                                requiredMessage="Email must be provided"
+                                                validatorMessage="Email incorrectly formatted">
+                                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                            </h:inputText>
+                                        </div>
+
+                                        <div class="field">
+                                            <label class="label">Add comment</label>
+                                            <h:inputTextarea
+                                                value="#{publicTicketBean.commentText}"
+                                                class="textarea"
+                                                a:placeholder="Add a comment..."
+                                                id="comment"
+                                                requiredMessage="Comment must be provided"
+                                                validatorMessage="Comment must be between 3 and 255 characters">
+                                                <f:validateLength minimum="3" maximum="255" />
+                                            </h:inputTextarea>
+                                        </div>
+
+                                        <h:commandButton
+                                            action="#{publicTicketBean.addComment()}"
+                                            class="button is-info mt-4 is-pulled-right"
+                                            value="Submit Comment"></h:commandButton>
+                                    </h:form>
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <h:panelGroup rendered="#{ticketManagementBean.saveResult == 'success'}" class="notification is-primary">
+                        Success!
+                    </h:panelGroup>
+
+                    <h:panelGroup rendered="#{ticketManagementBean.saveResult == 'failure'}" class="notification is-danger">
+                        Error saving.
+                    </h:panelGroup>
+
+                </ui:fragment>
+            </ui:fragment>
+
+            <ui:fragment rendered="#{!publicTicketBean.ticketExists}">
+                <div class="notification is-danger">
+                    No ticket found with this token!
+                </div>
+            </ui:fragment>
+        </div>
+    </body>
+</html>

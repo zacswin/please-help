@@ -1,0 +1,64 @@
+<h1 class="is-size-1">New Category</h1>
+<form method="POST" action="/category">
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Roles which can see this category</label>
+    <div class="control">
+      {{#each roles}}
+      <label class="my-2 is-block">
+        {{name}}
+        <input type="checkbox" name="roles[]" value="{{id}}" />
+      </label>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Colour</label>
+    <div class="control">
+      <div class="select">
+        <select name="colour">
+          <option disabled>Select a colour</option>
+          <option value="primary">Aqua</option>
+          <option value="link">Purple</option>
+          <option value="info">Blue</option>
+          <option value="success">Green</option>
+          <option value="warning">Yellow</option>
+          <option value="danger">Red</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <input type="submit" class="button is-link" value="Submit"></input>
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'success')}}
+<div class="notification is-primary">
+  Saved successfully! <a href="/admin/category">Go back.</a>
+</div>
+{{/if}}
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Error saving.
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}

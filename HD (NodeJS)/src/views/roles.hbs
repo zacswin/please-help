@@ -1,0 +1,30 @@
+<nav class="panel">
+  <p class="panel-heading">
+    Roles
+  </p>
+  <div class="panel-block">
+    <a class="button" href="/admin/role/new">New Role</a>
+  </div>
+
+  {{#each roles}}
+  <div class="panel-block is-active is-flex is-justify-content-flex-start">
+    <span class="panel-icon">
+      <i class="fas fa-user-tag" aria-hidden="true"></i>
+    </span>
+    {{name}}
+    <div style="margin-left: auto">
+      <a href="/admin/role/{{id}}" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-edit"></i>
+        </span>
+      </a>
+      <a href="/admin/role/{{id}}/delete" class="button is-small">
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
+      </a>
+    </div>
+  </div>
+  {{/each}}
+
+</nav>

@@ -1,0 +1,65 @@
+<h1 class="is-size-1">Edit Category</h1>
+<form method="POST" action="/category/edit">
+  <input type="hidden" name="id" value="{{editCategory.id}}" />
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name" value="{{editCategory.name}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Roles which can see this category</label>
+    <div class="control">
+      {{#each roles}}
+      <label class="my-2 is-block">
+        {{name}}
+        <input type="checkbox" name="roles[]" value="{{id}}" {{#if (inArray id ../editCategory.roles)}}checked{{/if}}/>
+      </label>
+      {{/each}}
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Colour</label>
+    <div class="control">
+      <div class="select">
+        <select name="colour">
+          <option disabled>Select a colour</option>
+          <option value="primary" {{#if (eq editCategory.colour 'primary' )}}selected{{/if}}>Aqua</option>
+          <option value="link" {{#if (eq editCategory.colour 'link' )}}selected{{/if}}>Purple</option>
+          <option value="info" {{#if (eq editCategory.colour 'info' )}}selected{{/if}}>Blue</option>
+          <option value="success" {{#if (eq editCategory.colour 'success' )}}selected{{/if}}>Green</option>
+          <option value="warning" {{#if (eq editCategory.colour 'warning' )}}selected{{/if}}>Yellow</option>
+          <option value="danger" {{#if (eq editCategory.colour 'danger' )}}selected{{/if}}>Red</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <input type="submit" class="button is-link" value="Submit"></input>
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'success')}}
+<div class="notification is-primary">
+  Saved successfully! <a href="/admin/category">Go back.</a>
+</div>
+{{/if}}
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Error saving.
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}

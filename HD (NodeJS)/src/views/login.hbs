@@ -1,0 +1,37 @@
+<div class="container m-4">
+  <div class="columns is-centered">
+    <div class="column is-5-tablet is-4-desktop is-3-widescreen">
+      <form method="POST" action="http://localhost/user/login" class="box">
+        <div class="field">
+          <label for="" class="label">Email</label>
+          <div class="control has-icons-left">
+            <input type="email" placeholder="e.g. bobsmith@gmail.com" class="input" name="email" required>
+            <span class="icon is-small is-left">
+              <i class="fa fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="" class="label">Password</label>
+          <div class="control has-icons-left">
+            <input type="password" placeholder="*******" class="input" name="password" required>
+            <span class="icon is-small is-left">
+              <i class="fa fa-lock"></i>
+            </span>
+          </div>
+        </div>
+        <div class="field">
+          <input class="button" type="submit" value="Log In">
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<br />
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Invalid login credentials.
+</div>
+{{/if}}

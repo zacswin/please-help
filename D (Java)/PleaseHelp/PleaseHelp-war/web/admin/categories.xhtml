@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <head>
+        <meta charset="utf-8" /> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>Please Help!</title>
+        <meta name="HandheldFriendly" content="True" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    </head>
+
+    <h:body>
+        <ui:composition template="/templates/adminTemplate.xhtml">
+            <ui:define name="body">
+
+                <nav class="panel">
+                    <p class="panel-heading">
+                        Categories
+                    </p>
+                    <div class="panel-block">
+                        <h:form>
+                            <h:commandLink class="button" action="#{categoryManagementBean.renderNewCategory()}">New Category</h:commandLink>
+                        </h:form>
+                    </div>
+
+                    <ui:repeat value="#{categoryManagementBean.categorys}" var="category">
+                        <div class="panel-block is-active is-flex is-justify-content-flex-start">
+                            <span class="panel-icon">
+                                <i class="fas fa-role" aria-hidden="true"></i>
+                            </span>
+                            <h:outputText value="#{category.name}" />
+                            <h:form style="margin-left: auto">
+
+                                <h:commandLink value="" action="#{categoryManagementBean.renderEditCategory(category.id)}" class="button is-small">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-edit"></i>
+                                    </span>
+                                </h:commandLink>
+                                <h:commandLink value="" action="#{categoryManagementBean.renderDeleteCategory(category.id)}" class="button is-small">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-trash"></i>
+                                    </span>
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </ui:repeat>       
+                </nav>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

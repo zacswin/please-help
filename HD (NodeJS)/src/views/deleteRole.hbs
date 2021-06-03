@@ -1,0 +1,21 @@
+<h1 class="is-size-1">Delete Role</h1>
+<p>Are you sure you would like to delete role #{{roleId}} from the system?</p>
+<br />
+<form method="POST" action="/role/{{roleId}}/delete">
+  <div class="level">
+    <div class="level-item">
+      <a class="button is-danger" href="/admin/role">No</a>
+    </div>
+    <div class="level-item">
+      <input type="submit" value="Yes" class="button is-success" />
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Cannot delete! There are users which use this role.
+</div>
+{{/if}}

@@ -1,0 +1,13 @@
+<h1 class="is-size-1">Delete User</h1>
+<p>Are you sure you would like to delete user #{{userId}} from the system?</p>
+<br />
+<form method="POST" action="/user/{{userId}}/delete">
+  <div class="level">
+    <div class="level-item">
+      <a class="button is-danger" href="/admin/user">No</a>
+    </div>
+    <div class="level-item">
+      <input type="submit" value="Yes" class="button is-success" />
+    </div>
+  </div>
+</form>

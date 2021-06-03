@@ -1,0 +1,57 @@
+<h1 class="is-size-1">Edit User</h1>
+<form method="POST" action="/user/edit">
+  <input type="hidden" name="id" value="{{editUser.id}}" />
+  <div class="field">
+    <label class="label">Name</label>
+    <div class="control">
+      <input class="input" type="text" name="name" value="{{editUser.name}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <input class="input" type="email" name="email" value="{{editUser.email}}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Role</label>
+    <div class="control">
+      <div class="select">
+        <select name="roleId">
+          <option disabled>Select a role</option>
+          {{#each roles}}
+          <option value="{{id}}" {{#if (eq id ../editUser.roleId)}}selected{{/if}}>{{name}}</option>
+          {{/each}}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <input type="submit" class="button is-link" value="Submit"></input>
+    </div>
+  </div>
+</form>
+
+<br />
+
+{{#if (eq result 'success')}}
+<div class="notification is-primary">
+  Saved successfully! <a href="/admin/user">Go back.</a>
+</div>
+{{/if}}
+
+{{#if (eq result 'failed')}}
+<div class="notification is-danger">
+  Error saving.
+</div>
+{{/if}}
+
+{{#if (isdefined errors)}}
+<div class="notification is-danger">
+  {{{errors}}}
+</div>
+{{/if}}
